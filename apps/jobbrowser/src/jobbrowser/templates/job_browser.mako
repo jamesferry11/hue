@@ -305,7 +305,7 @@ ${ commonheader("Job Browser", "jobbrowser", user, request) | n,unicode }
   <!-- ko ifnot: hasPagination -->
   <div class="inline">
     <span data-bind="text: paginationResultCounts()"></span>
-    ${ _('jobs') }.
+    ${ _('jobs') }
   </div>
   <!-- /ko -->
 
@@ -318,11 +318,10 @@ ${ commonheader("Job Browser", "jobbrowser", user, request) | n,unicode }
       <span data-bind="text: Math.min(paginationPage() * paginationResultPage(), paginationResultCounts())"></span>
       ${ _('of') }
       <span data-bind="text: paginationResultCounts"></span>
-      .
 
-      ##${ _('Show')}
-      ##<span data-bind="text: paginationResultPage"></span>
-      ##${ _('results by page.') }
+      ${ _('Show')}
+      <span data-bind="text: paginationResultPage"></span>
+      ${ _('results by page.') }
     </div>
 
     <ul class="inline">
@@ -1219,17 +1218,6 @@ ${ commonheader("Job Browser", "jobbrowser", user, request) | n,unicode }
         {'value': 'minutes', 'name': '${_("minutes")}'},
       ]);
 
-      self.filters = ko.computed(function() {
-        return [
-          {'text': self.textFilter()},
-          {'time': {'time_value': self.timeValueFilter(), 'time_unit': self.timeUnitFilter()}},
-          {'states': self.statesFilter()},
-        ];
-      });
-      self.filters.subscribe(function(value) {
-        self.fetchJobs();
-      });
-
       self.hasPagination = ko.computed(function() {
         return vm.interface() != 'jobs';
       });
@@ -1244,13 +1232,25 @@ ${ commonheader("Job Browser", "jobbrowser", user, request) | n,unicode }
         pagination.push({'paginationPage': self.paginationPage()});
         pagination.push({'paginationOffset': self.paginationOffset()});
         pagination.push({'paginationResultPage': self.paginationResultPage()});
-        return pagination;
+        return pagination; 
       });
 
       self.previousPage = function() {
       };
       self.nextPage = function() {
       };
+
+      self.filters = ko.computed(function() {
+        return [
+          {'text': self.textFilter()},
+          {'time': {'time_value': self.timeValueFilter(), 'time_unit': self.timeUnitFilter()}},
+          {'states': self.statesFilter()},
+          {'pagination': self.pagination()},
+        ];
+      });
+      self.filters.subscribe(function(value) {
+        self.fetchJobs();
+      });
 
 
       self.fetchJobs = function () {
