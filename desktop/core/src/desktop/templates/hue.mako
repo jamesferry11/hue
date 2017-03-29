@@ -213,7 +213,7 @@ ${ hueIcons.symbols() }
             % endif
             <li><a href="http://gethue.com" target="_blank"><span class="dropdown-no-icon">${_('Help')}</span></a></li>
             % if user.is_superuser:
-            <li><a href="/about"><span class="dropdown-no-icon">${_('About Hue')}</span></a></li>
+            <li><a href="/about/"><span class="dropdown-no-icon">${_('About Hue')}</span></a></li>
             % endif
             <li class="divider"></li>
             <li><a title="${_('Sign out')}" href="/accounts/logout/"><i class="fa fa-sign-out"></i> ${ _('Sign out') }</a></li>
@@ -769,6 +769,9 @@ ${ assist.assistPanel() }
           self.loadApp('help');
         });
 
+        page('/about/', function(ctx){
+          self.loadApp('admin_wizard');
+        });
         page('/about/admin_wizard', function(ctx){
           self.loadApp('admin_wizard');
         });
